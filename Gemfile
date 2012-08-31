@@ -1,10 +1,10 @@
 source 'https://rubygems.org'
 
 gem 'rails', '3.2.8'
+gem 'pg', '0.14.0'
 
 group :development, :test do
   gem 'rspec-rails', '2.10.0'
-  gem 'sqlite3'
 
 
 # Gems used only for assets and not required
