@@ -7,6 +7,7 @@ gem 'jquery-rails'
 
 group :development, :test do
   gem 'rspec-rails', '2.10.0'
+  gem 'annotate', '2.5.0'
 
 
 # Gems used only for assets and not required
