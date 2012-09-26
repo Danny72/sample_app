@@ -38,10 +38,19 @@ describe "AuthenticationPages" do
       it { should have_link('Sign out',    :href => signout_path) }
 
       it { should_not have_link('Sign In', :href => signin_path) }
-      
+
+      describe "can't access new action" do
+	before { visit signup_path }
+
+        it { should have_selector("title", :text => " ") }
+	it { should have_selector("h1",    :text => "Sample App") }
+      end
+
       describe "followed by signout" do
         before { click_link "Sign out" }
         it { should have_link "Sign in" }
+	it { should_not have_link('Profile',  :text => user_path(user)) }
+	it { should_not have_link('Settings', :text => edit_user_path(user)) }
       end
     end
   end
@@ -74,6 +83,19 @@ describe "AuthenticationPages" do
 	describe "after signing in" do
 	  it "should render the desired protected page" do
 	    page.should have_selector('title', :text => "Edit user")
+	  end
+
+ 	  describe "signing in again" do
+	    before do
+	      visit signin_path
+	      fill_in "Email",    with: user.email
+              fill_in "Password", with: user.password
+              click_button "Sign in" 
+            end
+
+            it "should render the default (profile) page" do
+              page.should have_selector('title', :text => user.name) 
+            end
 	  end
 	end
       end
