@@ -42,8 +42,8 @@ describe "AuthenticationPages" do
       describe "can't access new action" do
 	before { visit signup_path }
 
-        it { should have_selector("title", :text => " ") }
-	it { should have_selector("h1",    :text => "Sample App") }
+        it { should have_selector("title",       :text => " ") }
+	it { should have_link("view my profile", :href => user_path(user)) }
       end
 
       describe "followed by signout" do
@@ -115,6 +115,19 @@ describe "AuthenticationPages" do
 	describe "visiting the user index" do
 	  before { visit users_path }
 	  it { should have_selector("title", :text => "Sign in") }
+	end
+      end
+
+      describe "in the Microposts controller" do
+        
+	describe "submitting to the create action" do
+          before { post microposts_path }
+          specify { response.should redirect_to(signin_path) }
+        end
+
+        describe "submittig to the destroy action" do
+	  before { delete micropost_path(FactoryGirl.create(:micropost)) }
+	  specify { response.should redirect_to(signin_path) }
 	end
       end
     end
