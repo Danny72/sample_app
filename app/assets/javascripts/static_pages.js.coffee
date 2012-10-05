@@ -11,9 +11,11 @@ jQuery ->
     num = $("#micropost_content").val().length
     char_entered = max-num
     
-    if (char_entered <= 0) || (char_entered == 140)
+    if char_entered <= 0
       $(".btn").attr('disabled', 'disabled')
       $('#char_limit').text("Cannot enter more than 140 characters").css("color","red")
+    else if char_entered == 140
+      $('.btn').attr('disabled', 'disabled')
     else
       $(".btn").removeAttr('disabled')
       $('#char_limit').text(" ")
