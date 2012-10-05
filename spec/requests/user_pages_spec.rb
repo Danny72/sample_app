@@ -42,12 +42,26 @@ describe "UserPages" do
         it "should be able to delete another user" do
           expect { click_link('delete') }.to change(User, :count).by(-1)
         end
+
         it { should_not have_link('delete', href: user_path(admin)) }
 
 	describe "admin should not be able to delete themselves" do
 	   before { delete user_path(admin) }
 	   specify { response.should redirect_to root_path }
 	end
+
+        describe "should not be able to delete another users microposts" do
+          let(:user)  { FactoryGirl.create(:user)  }
+          let(:m1)    { FactoryGil.create(:micropost, :user => user, :content => "Dipsum") }
+
+          before do
+            sign_in admin
+            visit user_path(user)
+          end
+   
+          it { should_not have_content("delete") }
+        end
+
       end
     end
 

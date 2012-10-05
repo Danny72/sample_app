@@ -12,7 +12,7 @@ describe "Static pages" do
   describe "Home page" do
     
     before { visit root_path }
-    let(:heading)   { 'Sample App' }
+    let(:heading)    { 'Sample App' }
     let(:page_title) { '' }
 
     it_should_behave_like "all static pages"
@@ -33,6 +33,40 @@ describe "Static pages" do
 	end
       end
     end
+
+    describe "for micropost count" do
+
+      let(:user) { FactoryGirl.create(:user) }
+      before do
+        sign_in user
+        visit root_path
+      end
+
+      it "with no microposts" do
+        page.should have_content("0 microposts")
+      end
+
+      it "with 1 micropost" do
+        FactoryGirl.create(:micropost, :user => user, :content => "Lorem")
+        visit root_path
+
+        page.should have_content("1 micropost")
+      end
+    end
+
+    describe "pagination test" do
+     
+      let(:user) { FactoryGirl.create(:user) }
+      before do
+        40.times { FactoryGirl.create(:micropost, :user => user, :content => "YOIP") } 
+        sign_in user
+        visit root_path
+      end 
+
+      it { should have_link("2", :href => "/?page=2") }
+ 
+    end
+     
   end
 
   describe "Help page" do
