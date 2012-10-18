@@ -196,6 +196,32 @@ describe "UserPages" do
       visit edit_user_path(user) 
     end
 
+  describe "profile page" do
+    let(:user) { FactoryGirl.create(:user) }  
+
+    before do
+      sign_in(user)
+      visit user_path(user)
+    end
+
+    it "should render the user's feed" do
+      user.feed.each do |item|
+	page.should have_selector("li##{item.id}", :text => item.content)
+      end
+    end
+
+    describe "follower/following counts" do
+      let(:other_user) { FactoryGirl.create(:user) }
+      before do
+        user.follow!(other_user)
+        visit user_path(user)
+      end
+
+      it { should have_link("0 following", :href => following_user_path(user)) }
+      it { should have_link("1 followers", :href => following_user_path(user)) }
+
+  end
+
     describe "page" do
       it { should have_selector("h1",    :text => "Update your profile") }
       it { should have_selector("title", :text => "Edit user") }
