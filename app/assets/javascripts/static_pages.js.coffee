@@ -6,6 +6,8 @@ jQuery ->
   $("#click").click ->
     alert("Yoip")
   
+  # $(".btn").attr('disabled', 'disabled')
+
   $("#micropost_content").keyup ->
     max = 140
     num = $("#micropost_content").val().length

@@ -189,13 +189,6 @@ describe "UserPages" do
     end
   end
 
-  describe "edit" do
-    let(:user) { FactoryGirl.create(:user) }
-    before do
-      sign_in user
-      visit edit_user_path(user) 
-    end
-
   describe "profile page" do
     let(:user) { FactoryGirl.create(:user) }  
 
@@ -213,14 +206,22 @@ describe "UserPages" do
     describe "follower/following counts" do
       let(:other_user) { FactoryGirl.create(:user) }
       before do
-        user.follow!(other_user)
-        visit user_path(user)
+        other_user.follow!(user)
+        visit root_path
       end
 
       it { should have_link("0 following", :href => following_user_path(user)) }
-      it { should have_link("1 followers", :href => following_user_path(user)) }
+      it { should have_link("1 followers", :href => followers_user_path(user)) }
 
+    end
   end
+
+  describe "edit" do
+    let(:user) { FactoryGirl.create(:user) }
+    before do
+      sign_in user
+      visit edit_user_path(user) 
+    end
 
     describe "page" do
       it { should have_selector("h1",    :text => "Update your profile") }

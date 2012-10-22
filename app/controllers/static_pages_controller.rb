@@ -17,4 +17,9 @@ class StaticPagesController < ApplicationController
   def contact
   end
 
+  def rss_feed
+    @user = current_user
+    @rss_feed = current_user.feed
+  end
+
 end

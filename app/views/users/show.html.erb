@@ -12,6 +12,7 @@
     <%= render 'follow_form' if signed_in? %>
     <% if @user.microposts.any? %>
       <h3>Microposts (<%= @user.microposts.count %>)</h3>
+      <h6><%= link_to "rss", "/users/#{@user.id}.atom" %></h6>
       <ol class="microposts">
 	<% @microposts.each do |mp| %>
 	  <%= render mp %>
