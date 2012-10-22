@@ -6,7 +6,7 @@ jQuery ->
   $("#click").click ->
     alert("Yoip")
   
-  $(".btn").attr('disabled', 'disabled')
+  $(".btn[value='Post']").attr('disabled', 'disabled')
 
   $("#micropost_content").keyup ->
     max = 140
@@ -14,10 +14,10 @@ jQuery ->
     char_entered = max-num
     
     if char_entered <= 0
-      $(".btn").attr('disabled', 'disabled')
+      $(".btn[type='Post']").attr('disabled', 'disabled')
       $('#char_limit').text("Cannot enter more than 140 characters").css("color","red")
     else if char_entered == 140
-      $('.btn').attr('disabled', 'disabled')
+      $('.btn[type="Post"]').attr('disabled', 'disabled')
     else
       $(".btn").removeAttr('disabled')
       $('#char_limit').text(" ")
