@@ -6,7 +6,7 @@ jQuery ->
   $("#click").click ->
     alert("Yoip")
   
-  # $(".btn").attr('disabled', 'disabled')
+  $(".btn").attr('disabled', 'disabled')
 
   $("#micropost_content").keyup ->
     max = 140
